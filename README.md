@@ -57,7 +57,6 @@
 │   └── STM32F1xx_HAL_Driver/ # ST HAL 库
 ├── Projects/MDK-ARM/         # Keil uVision 工程（project.uvprojx）
 ├── Hardware/PCB/             # 原理图 / Gerber / 钻孔 / 飞针测试文件（可直接下单）
-├── Tools/                    # PCB 预览渲染脚本等
 └── README.md
 ```
 
@@ -93,13 +92,6 @@
 - 钻孔文件：通孔、过孔、非金属化孔（`.DRL`）；
 - `FlyingProbeTesting.json`：飞针测试文件；
 - `PCB下单必读.txt`：下单流程参考（嘉立创）。
-
-可使用 [Tools/render_gerber.py](Tools/render_gerber.py)（依赖 `pygerber`）将 Gerber 渲染为 PNG 预览。
-
-```bash
-python -m pip install -r Tools/requirements.txt
-python Tools/render_gerber.py
-```
 
 ## 许可
 
