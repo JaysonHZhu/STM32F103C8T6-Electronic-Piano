@@ -96,6 +96,11 @@
 
 可使用 [Tools/render_gerber.py](Tools/render_gerber.py)（依赖 `pygerber`）将 Gerber 渲染为 PNG 预览。
 
+```bash
+python -m pip install -r Tools/requirements.txt
+python Tools/render_gerber.py
+```
+
 ## 许可
 
 本项目为学习交流用途，欢迎 fork 和二次开发。

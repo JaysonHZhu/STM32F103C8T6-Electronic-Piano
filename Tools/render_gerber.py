@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import os
-from pygerber.gerber.api import GerberFile
+import argparse
+from pathlib import Path
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-gerber_dir = os.path.join(REPO_ROOT, 'Hardware', 'PCB')
-output_dir = REPO_ROOT
+from pygerber.gerberx3.api.v2 import FileTypeEnum, GerberFile
+
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+GERBER_DIR = REPO_ROOT / 'Hardware' / 'PCB'
 
 # 渲染顶层铜层
 files_to_render = [
@@ -13,15 +15,33 @@ files_to_render = [
     ('Gerber_TopSilkscreenLayer.GTO', 'PCB_Silkscreen.png'),
 ]
 
-for gerber_name, out_name in files_to_render:
-    path = os.path.join(gerber_dir, gerber_name)
-    if os.path.exists(path):
-        print(f'正在渲染 {gerber_name}...')
-        gf = GerberFile.from_file(path)
-        out_path = os.path.join(output_dir, out_name)
-        gf.render_rasterized(out_path, dpi=200)
-        print(f'  -> {out_path}')
-    else:
-        print(f'文件不存在: {path}')
+def main():
+    parser = argparse.ArgumentParser(description='Render Gerber layers to PNG files.')
+    parser.add_argument(
+        '--output-dir',
+        type=Path,
+        default=REPO_ROOT,
+        help='Output directory (default: repository root)',
+    )
+    args = parser.parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
 
-print('渲染完成')
+    for gerber_name, out_name in files_to_render:
+        path = GERBER_DIR / gerber_name
+        if path.exists():
+            print(f'Rendering {gerber_name}...')
+            parsed = GerberFile.from_file(
+                path,
+                file_type=FileTypeEnum.INFER,
+            ).parse()
+            out_path = args.output_dir / out_name
+            parsed.render_raster(out_path, dpmm=8)
+            print(f'  -> {out_path}')
+        else:
+            print(f'File not found: {path}')
+
+    print('Rendering complete')
+
+
+if __name__ == '__main__':
+    main()
