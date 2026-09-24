@@ -1,0 +1,33 @@
+# ===== Keil MDK-ARM 构建产物 =====
+Output/
+Projects/MDK-ARM/DebugConfig/
+Projects/MDK-ARM/build.log
+Projects/MDK-ARM/*.uvguix.*
+Projects/MDK-ARM/*.uvoptx
+Projects/MDK-ARM/*.scvd
+*.o
+*.d
+*.crf
+*.axf
+*.lnp
+*.lst
+*.htm
+*.dep
+*.sct
+*.bak
+
+# ===== Keil RTE 自动生成文件 =====
+RTE/RTE_Components.h
+
+# ===== 个人 / 本地文件 =====
+.claude/
+.vscode/
+.idea/
+*.user
+
+# ===== Python =====
+__pycache__/
+*.pyc
+
+# ===== 生成的 PCB 预览图（仅仓库根目录）=====
+/PCB_*.png
